@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Split from "react-split";
 import {nanoid} from "nanoid";
 
@@ -7,7 +7,7 @@ import Editor from "./components/Editor";
 import {data} from "./data";
 
 export default function App() {
-  const [notes, setNotes] = React.useState([]);
+  const [notes, setNotes] = React.useState(JSON.parse(localStorage.getItem("notes")) || []);
   const [currentNoteId, setCurrentNoteId] = React.useState((notes[0] && notes[0].id) || "");
 
   function createNewNote() {
@@ -35,6 +35,10 @@ export default function App() {
       }) || notes[0]
     );
   }
+
+  useEffect(() => {
+    localStorage.setItem("notes", JSON.stringify(notes));
+  }, [notes]);
 
   return (
     <main>
