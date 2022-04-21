@@ -21,12 +21,29 @@ export default function App() {
   }
 
   function updateNote(text) {
-    setNotes((oldNotes) =>
-      oldNotes.map((oldNote) => {
-        return oldNote.id === currentNoteId ? {...oldNote, body: text} : oldNote;
-      }),
-    );
+    setNotes((oldNotes) => {
+      const sortNotes = [];
+
+      for (let i = 0; i < oldNotes.length; i++) {
+        const oldNote = oldNotes[i];
+
+        if (oldNote.id === currentNoteId) {
+          sortNotes.unshift({...oldNote, body: text});
+        } else {
+          sortNotes.push(oldNote);
+        }
+      }
+
+      return sortNotes;
+    });
   }
+  // function updateNote(text) {
+  //   setNotes((oldNotes) =>
+  //     oldNotes.map((oldNote) => {
+  //       return oldNote.id === currentNoteId ? {...oldNote, body: text} : oldNote;
+  //     }),
+  //   );
+  // }
 
   function findCurrentNote() {
     return (
